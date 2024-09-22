@@ -10,6 +10,7 @@ public class AccountController {
 
     @GetMapping("/welcome")
     public String sayHello(){
+
         return "Hello Janmejay";
     }
 }
