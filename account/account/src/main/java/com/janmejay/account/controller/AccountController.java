@@ -1,16 +1,27 @@
 package com.janmejay.account.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.janmejay.account.constants.AccountsConstants;
+import com.janmejay.account.dto.CustomerDto;
+import com.janmejay.account.dto.ResponseDto;
+import com.janmejay.account.service.IAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/app")
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AccountController {
 
-    @GetMapping("/welcome")
-    public String sayHello(){
+    @Autowired
+    IAccountService iAccountService;
 
-        return "Hello Janmejay";
+
+    @PostMapping(value = "/account/save")
+    public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto){
+
+        iAccountService.createAccount(customerDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(AccountsConstants.STATUS_201,AccountsConstants.MESSAGE_201));
     }
 }
