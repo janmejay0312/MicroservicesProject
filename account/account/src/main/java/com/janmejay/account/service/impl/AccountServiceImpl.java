@@ -88,7 +88,7 @@ return customer;
         }
     Customer customer = customerIfPresent.get();
 
-        Account account = accountRepository.findAllByCustomerId(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("Account", "CustomerId", String.valueOf(customer.getCustomerId())));
+        Account account = accountRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("Account", "CustomerId", String.valueOf(customer.getCustomerId())));
 
         AccountsDto accountsDto = AccountMapper.mapToAccountDto(account, new AccountsDto());
         CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
@@ -123,5 +123,19 @@ return customer;
         }
 
         return isUpdated;
+    }
+
+    @Override
+    public boolean deleteCustomer(String mobileNumber) {
+
+
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(()->new ResourceNotFoundException("Customer","mobileNumber",mobileNumber));
+
+            Long customerId = customer.getCustomerId();
+            accountRepository.deleteByCustomerId(customerId);
+        customerRepository.deleteById(customerId);
+
+
+        return true;
     }
 }

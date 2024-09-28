@@ -12,4 +12,6 @@ public interface IAccountService {
     public CustomerDto fetchAccount(String mobileNumber );
 
     public boolean updateCustomer(CustomerDto customerDto);
+
+    public boolean deleteCustomer(String mobileNumber);
 }
