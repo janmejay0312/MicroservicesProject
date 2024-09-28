@@ -22,10 +22,26 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(AccountAlreadyExistException.class)
-    public ResponseEntity<ErrorResponseDto> handlerAccountAlreadyExistException(AccountAlreadyExistException exception, WebRequest webRequest){
+    @ExceptionHandler(CustomerNotExistException.class)
+    public ResponseEntity<ErrorResponseDto> handlerCustomerNotExistException(CustomerNotExistException exception, WebRequest webRequest){
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(webRequest.getDescription(false), HttpStatus.BAD_REQUEST,exception.getMessage(), LocalDateTime.now());
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(webRequest.getDescription(false), HttpStatus.NOT_FOUND,exception.getMessage(), LocalDateTime.now());
+
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccountNotExistException.class)
+    public ResponseEntity<ErrorResponseDto> handlerAccountAlreadyExistException(AccountNotExistException exception, WebRequest webRequest){
+
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(webRequest.getDescription(false), HttpStatus.NOT_FOUND,exception.getMessage(), LocalDateTime.now());
+
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handlerResourceNotFoundException(ResourceNotFoundException exception, WebRequest webRequest){
+
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(webRequest.getDescription(false), HttpStatus.NOT_FOUND,exception.getMessage(), LocalDateTime.now());
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
